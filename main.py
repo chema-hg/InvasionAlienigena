@@ -20,6 +20,10 @@ class AlienInvasion:
         # para todos los metodos de la clase.
         pygame.display.set_caption("Invasión Alienígena")
 
+        # Configura el color del fondo
+        # En Pygame se usa RGB.
+        self.bg_color = (230, 230, 230)
+
     def run_game(self):
         """Incia el bucle principal del juego"""
         while True:
@@ -27,6 +31,12 @@ class AlienInvasion:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+
+            # Rellenamos la pantalla con el color de fondo elegido usando
+            # el metodo fill() que actua sobre una superficie y solo tiene
+            # un argumento: el color.
+            self.screen.fill(self.bg_color)
+
             # Hace visible la última pantalla dibujada
             # dibuja una pantalla vacia en cada paso por el bucle while, borrando
             # la pantalla antigua para que solo se vea la nueva. Esto sirve para actualizar
