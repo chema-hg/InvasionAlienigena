@@ -5,6 +5,8 @@ import sys
 
 import pygame
 
+from settings import Settings
+
 
 class AlienInvasion:
     """Clase general para gestionar los recursos y el comportamiento del juego"""
@@ -13,16 +15,13 @@ class AlienInvasion:
         """Inicializa el juego y crea recursos"""
         pygame.init()
         # inicia la configuración del fondo para que pygame funcione correctamente.
+        self.settings = Settings()
 
-        self.screen = pygame.display.set_mode((1200, 800))
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         # crea una ventana en la que dibujaremos los datos del juego.
         # Esta ventana la asignamos al atributo self.screen para que este disponible
         # para todos los metodos de la clase.
         pygame.display.set_caption("Invasión Alienígena")
-
-        # Configura el color del fondo
-        # En Pygame se usa RGB.
-        self.bg_color = (230, 230, 230)
 
     def run_game(self):
         """Incia el bucle principal del juego"""
@@ -35,7 +34,7 @@ class AlienInvasion:
             # Rellenamos la pantalla con el color de fondo elegido usando
             # el metodo fill() que actua sobre una superficie y solo tiene
             # un argumento: el color.
-            self.screen.fill(self.bg_color)
+            self.screen.fill(self.settings.bg_color)
 
             # Hace visible la última pantalla dibujada
             # dibuja una pantalla vacia en cada paso por el bucle while, borrando
