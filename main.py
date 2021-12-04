@@ -6,6 +6,7 @@ import sys
 import pygame
 
 from settings import Settings
+from ship import Ship
 
 
 class AlienInvasion:
@@ -23,6 +24,11 @@ class AlienInvasion:
         # para todos los metodos de la clase.
         pygame.display.set_caption("Invasión Alienígena")
 
+        self.ship = Ship(self)
+        # la llamada a Ship() requiere un argumento, una instancia de AlienInvasion. El argumento self
+        # se refiere aqui a la instancia actual de AlienInvasión. Este es el parametro que da a Ship acceso a los
+        # recursos del juego, como, por ejemplo, el objeto screen. Asignamos una instancia de Ship a self.ship.
+
     def run_game(self):
         """Incia el bucle principal del juego"""
         while True:
@@ -35,6 +41,9 @@ class AlienInvasion:
             # el metodo fill() que actua sobre una superficie y solo tiene
             # un argumento: el color.
             self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
+            # Despues de rellenar el fondo, dibujamos la nave en la pantalla llamando a
+            # ship.blitme() para que la nave aparezca encima del fondo.
 
             # Hace visible la última pantalla dibujada
             # dibuja una pantalla vacia en cada paso por el bucle while, borrando
