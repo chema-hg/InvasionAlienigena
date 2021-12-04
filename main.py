@@ -30,27 +30,34 @@ class AlienInvasion:
         # recursos del juego, como, por ejemplo, el objeto screen. Asignamos una instancia de Ship a self.ship.
 
     def run_game(self):
-        """Incia el bucle principal del juego"""
+        """Inicia el bucle principal del juego"""
         while True:
-            # Busca eventos del teclado y el ratón
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            # metodo auxiliar que usamos dentro de la clase. Para ello en python
+            # ponemos un guion bajo delante del nombre del método.
+            self._update_screen()
 
-            # Rellenamos la pantalla con el color de fondo elegido usando
-            # el metodo fill() que actua sobre una superficie y solo tiene
-            # un argumento: el color.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
-            # Despues de rellenar el fondo, dibujamos la nave en la pantalla llamando a
-            # ship.blitme() para que la nave aparezca encima del fondo.
+    def _check_events(self):
+        # Busca eventos del teclado y el ratón
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-            # Hace visible la última pantalla dibujada
-            # dibuja una pantalla vacia en cada paso por el bucle while, borrando
-            # la pantalla antigua para que solo se vea la nueva. Esto sirve para actualizar
-            # constantemente la pantalla para mostrar las nuevas posiciones de los elementos y
-            # ocultar las viejas creando la ilusión de un movimiento suave.
-            pygame.display.flip()
+    def _update_screen(self):
+        # Rellenamos la pantalla con el color de fondo elegido usando
+        # el metodo fill() que actua sobre una superficie y solo tiene
+        # un argumento: el color.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        # Despues de rellenar el fondo, dibujamos la nave en la pantalla llamando a
+        # ship.blitme() para que la nave aparezca encima del fondo.
+
+        # Hace visible la última pantalla dibujada
+        # dibuja una pantalla vacia en cada paso por el bucle while, borrando
+        # la pantalla antigua para que solo se vea la nueva. Esto sirve para actualizar
+        # constantemente la pantalla para mostrar las nuevas posiciones de los elementos y
+        # ocultar las viejas creando la ilusión de un movimiento suave.
+        pygame.display.flip()
 
 
 if __name__ == '__main__':
