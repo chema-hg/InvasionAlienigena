@@ -26,8 +26,16 @@ class Ship:
         # Cuando se carga la imagen, llamamos a get_rect() para acceder al atributo rect de
         # la superficie de la nave y poder usarlo luego para colocar el cohete.
 
+        self.settings = ai_game.settings
+
         # Coloca inicialmente cada nave en el centro de la parte inferor de la pantalla.
         self.rect.midbottom = self.screen_rect.midbottom
+
+        # Guarda un valor decimal  para la posición horizontal de la nave
+        # Esto es porque podemos usar un valor decimal para el atributo rect, pero el rect
+        # solo utiizará la parte entera de ese valor porque representa pixeles. Para poder hacer
+        # un seguimiento definimos este atriburo self.x que pueda guardar valores decimales.
+        self.x = float(self.rect.x)
 
         # Bandera de movimiento
         self.moving_right = False
@@ -35,17 +43,21 @@ class Ship:
 
     def update(self):
         """ Actualiza la posición de la nave en función de la bandera de movimiento"""
+        # Actualiza el valor x de la nave, no el rect.
         if self.moving_right:
-            self.rect.x += 1
+            self.x += self.settings.ship_speed
         if self.moving_left:
-            self.rect.x -= 1
+            self.x -= self.settings.ship_speed
 
+        # Actualiza el objeto rect de self.x
+        # Solo la parte entera de self.x se guarda en self.rect.x pero nos sirve
+        # para mostrar la nave.
+        self.rect.x = self.x
 
     def blitme(self):
         """Dibuja una nave en su lugar actual"""
         self.screen.blit(self.image, self.rect)
         # Dibuja la imagen en la pantalla en la posición especificada por self.rect
-
 
 # Pygame nos permite gestionar los elementos del juego como que fuesen rectangulos.
 # por eso trataremos tanto la pantalla como la nave como rectangulos en esta clase.

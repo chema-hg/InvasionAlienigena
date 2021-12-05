@@ -9,3 +9,5 @@ class Settings:
         # Configura el color del fondo
         # En Pygame se usa RGB.
         self.bg_color = (230, 230, 230)
+        # Velocidad de la nave
+        self.ship_speed = 1.5
