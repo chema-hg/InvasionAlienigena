@@ -35,13 +35,27 @@ class AlienInvasion:
             self._check_events()
             # metodo auxiliar que usamos dentro de la clase. Para ello en python
             # ponemos un guion bajo delante del nombre del método.
+            self.ship.update()
             self._update_screen()
+
 
     def _check_events(self):
         # Busca eventos del teclado y el ratón
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                # Si el evento es una pulsación de tecla (KEYDOWN)
+                if event.key == pygame.K_RIGHT:
+                # mueve la nave a la derecha al pulsar flecha derecha.
+                    self.ship.moving_right = True
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = True
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False
+                elif event.key == pygame.K_LEFT:
+                    self.ship.moving_left = False
 
     def _update_screen(self):
         # Rellenamos la pantalla con el color de fondo elegido usando
