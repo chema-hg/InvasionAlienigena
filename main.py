@@ -22,6 +22,13 @@ class AlienInvasion:
         # crea una ventana en la que dibujaremos los datos del juego.
         # Esta ventana la asignamos al atributo self.screen para que este disponible
         # para todos los metodos de la clase.
+
+        # sustituir lo anterior por esto si queremos pantalla completa.
+        # asegurarse de poder salir pulsando q que sino no deja.
+        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # self.settings.screen_width = self.screen.get_rect().width
+        # self.settings.screen_height = self.screen.get_rect().height
+
         pygame.display.set_caption("Invasión Alienígena")
 
         self.ship = Ship(self)
