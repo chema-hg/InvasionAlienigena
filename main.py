@@ -110,11 +110,14 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
         # Muestra la cantidad de balas vivas en cada ciclo del bucle.
         # Sirve para comprobar si todas las cosas funcionan, ya que se tarda más en escribir la salida
         # del terminal que en dibujar los gráficos en la pantalla del juego.
         # print(len(self.bullets))
-
         # El siguiente código busca balas que hayan dado a los aliens.
         # La función sprite.groupcollide() compara los rectángulos de cada elemento las bales con los
         # aliens. Devuelve un diccionario que contiene las balas y los aliens que han chocado.
@@ -122,7 +125,6 @@ class AlienInvasion:
         # Los dos argumentos True le dicen a Pygame que borren las balas y los aliens que choquen.
         # Podriamos hacer una superbala que arrasara a todos los aliens por su camino poniendo
         # el primer argumento booleano como False.
-
         if not self.aliens:
             # Destruye las balas existentes y crea una flota nueva.
             self.bullets.empty()
