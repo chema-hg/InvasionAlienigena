@@ -48,23 +48,7 @@ class AlienInvasion:
             # metodo auxiliar que usamos dentro de la clase. Para ello en python
             # ponemos un guion bajo delante del nombre del método.
             self.ship.update()
-            self.bullets.update()
-            # Cuando llamamos a update el grupo llama automáticamente a update() para cada
-            # uno de sus sprites, en este caso las balas.
-
-            # se eliminan las balas que han desaparecido por la parte superior de la pantalla.
-            # Al usar un bucle for con una lista se espera que esta tendrá la misma longitud mientras
-            # se ejecute el bucle. Por eso, como no podemos quitar elementos de una lista mientras se
-            # esta ejecutando el bucle usamos una copia de la lista y una vez comprobado si la bala ha
-            # salido de la parte superior de la pantalla la borramos de la misma.
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            # Muestra la cantidad de balas vivas en cada ciclo del bucle.
-            # Sirve para comprobar si todas las cosas funcionan, ya que se tarda más en escribir la salida
-            # del terminal que en dibujar los gráficos en la pantalla del juego.
-            # print(len(self.bullets))
-
+            self._update_bullets()
             self._update_screen()
 
     def _check_events(self):
@@ -75,7 +59,6 @@ class AlienInvasion:
             elif event.type == pygame.KEYDOWN:
                 # Si el evento es una pulsación de tecla (KEYDOWN)
                 self._check_keydown_events(event)
-
             elif event.type == pygame.KEYUP:
                 # Si el evento es levantar una tecla (KEYUP)
                 self._check_keyup_events(event)
@@ -107,6 +90,23 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullet_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        self.bullets.update()
+        # Cuando llamamos a update el grupo llama automáticamente a update() para cada
+        # uno de sus sprites, en este caso las balas.
+        # se eliminan las balas que han desaparecido por la parte superior de la pantalla.
+        # Al usar un bucle for con una lista se espera que esta tendrá la misma longitud mientras
+        # se ejecute el bucle. Por eso, como no podemos quitar elementos de una lista mientras se
+        # esta ejecutando el bucle usamos una copia de la lista y una vez comprobado si la bala ha
+        # salido de la parte superior de la pantalla la borramos de la misma.
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        # Muestra la cantidad de balas vivas en cada ciclo del bucle.
+        # Sirve para comprobar si todas las cosas funcionan, ya que se tarda más en escribir la salida
+        # del terminal que en dibujar los gráficos en la pantalla del juego.
+        # print(len(self.bullets))
 
     def _update_screen(self):
         # Rellenamos la pantalla con el color de fondo elegido usando
