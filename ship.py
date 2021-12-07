@@ -59,6 +59,11 @@ class Ship:
         self.screen.blit(self.image, self.rect)
         # Dibuja la imagen en la pantalla en la posición especificada por self.rect
 
+    def center_ship(self):
+        """Centra la nave en la pantalla al ser destruida"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
+
 # Pygame nos permite gestionar los elementos del juego como que fuesen rectángulos.
 # por eso trataremos tanto la pantalla como la nave como rectángulos en esta clase.
 # Cuando se trabaja con un objeto rect (rectángulo) podemos usar las coordenadas x e y de los
