@@ -12,7 +12,7 @@ class Settings:
         # Velocidad de la nave
         self.ship_speed = 1.5
         # Configuración de las balas
-        self.ship_limit = 3
+        self.ship_limit = 2 # Son 3 vidas 0,1,2
         # número de naves del jugador
         self.bullet_speed = 1
         self.bullet_width = 3
@@ -22,7 +22,7 @@ class Settings:
         # jugador en la pantalla.
         self.bullet_allowed = 4
         # Configuración del alien
-        self.alien_speed = 0.8
+        self.alien_speed = 1
         # Velocidad de movimiento del alien hacia la derecha
         self.fleet_drop_speed = 10
         # Velocidad de bajada de los aliens al llegar al borde de la pantalla.

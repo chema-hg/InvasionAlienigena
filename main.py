@@ -9,9 +9,11 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+
 
 
 class AlienInvasion:
@@ -53,6 +55,10 @@ class AlienInvasion:
 
         self._create_fleet()
 
+        # Hace el boton play
+        self.play_button = Button(self, "Jugar")
+
+
     def run_game(self):
         """Inicia el bucle principal del juego"""
         while True:
@@ -78,6 +84,10 @@ class AlienInvasion:
             elif event.type == pygame.KEYUP:
                 # Si el evento es levantar una tecla (KEYUP)
                 self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Si el evento es click con el ratón.
+                mouse_pos: tuple = pygame.mouse.get_pos() # cordenadas x e y del cursor al hacer clic.
+                self._check_play_button(mouse_pos)
 
     def _check_keydown_events(self, event):
         """Responde a pulsaciones de teclas"""
@@ -98,6 +108,34 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _check_play_button(self, mouse_pos):
+        """Inicia un juego nuevo cuando el jugador hace clic en Play"""
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        # Esta bandera contiene un valor True o False y el juego se reiniciará solo si se hace
+        # click en play y el juego no esta activo actualmente. Esto es porque si no pusieramos esto
+        # el boton seguiría respondiendo a los clicks incluso cuando no es visible. Por eso se
+        # desactiva.
+        if button_clicked and not self.stats.game_active:
+            # Para ver si el clic del ratón se colapsa con el espacio del boton.
+            # Restablece las estadísticas del juego para que el jugador tenga 3 naves nuevas.
+            self.stats.reset_stats()
+            # Para que el juego comience en cuanto el código de esta función termine de ejecutarse.
+
+            self.stats.game_active = True
+
+            # Se deshace de los aliens y las balas que pudieran quedar en la pantalla.
+            self.aliens.empty()
+            self.bullets.empty()
+
+            # Crea una flota nueva y centra la nave.
+            self._create_fleet()
+            self.ship.center_ship()
+
+            # Oculta el cursor del ratón de la ventana cuando comienza el juego
+            pygame.mouse.set_visible(False)
+
+
 
     def _fire_bullet(self):
         """Crea una bala nueva y la añade al grupo de balas"""
@@ -173,6 +211,8 @@ class AlienInvasion:
 
         else:
             self.stats.game_active = False
+            # Muestra el cursos del ratón al terminar el juego
+            pygame.mouse.set_visible(True)
 
 
     def _check_aliens_bottom(self):
@@ -243,6 +283,12 @@ class AlienInvasion:
         # Cuando llamamos a draw() en un grupo, Pygame dibuja cada elemento del grupo
         # en la posición definida por su atributo rect. El argumento que le pasamos es una
         # superficie en la que dibujar los elementos del grupo.
+
+        # Dibuja el botón para jugar si el juego está inactivo.
+        # Para que sea visible encima de los demás elementos de la pantalla lo dibujamos después
+        # de dibujar los otros elementos, pero antes de cambiar a una pantalla nueva.
+        if not self.stats.game_active:
+            self.play_button.draw_button()
 
         # Hace visible la última pantalla dibujada
         # dibuja una pantalla vacía en cada paso por el bucle while, borrando
