@@ -9,6 +9,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -40,6 +41,7 @@ class AlienInvasion:
 
         # Crea una instancia para guardar las estadísticas del juego.
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         self.ship = Ship(self)
         # La llamada a Ship() requiere un argumento, una instancia de AlienInvasion. El argumento self
@@ -117,12 +119,16 @@ class AlienInvasion:
         # el boton seguiría respondiendo a los clicks incluso cuando no es visible. Por eso se
         # desactiva.
         if button_clicked and not self.stats.game_active:
+            # Restablece los parámetros del juego al nivel inicial
+            # Si no estuviese empezaríamos con los de la última partida.
+            self.settings.initialize_dynamic_settings()
             # Para ver si el clic del ratón se colapsa con el espacio del boton.
             # Restablece las estadísticas del juego para que el jugador tenga 3 naves nuevas.
             self.stats.reset_stats()
             # Para que el juego comience en cuanto el código de esta función termine de ejecutarse.
 
             self.stats.game_active = True
+            self.sb.prep_score()
 
             # Se deshace de los aliens y las balas que pudieran quedar en la pantalla.
             self.aliens.empty()
@@ -168,7 +174,14 @@ class AlienInvasion:
         # El siguiente código busca balas que hayan dado a los aliens.
         # La función sprite.groupcollide() compara los rectángulos de cada elemento las bales con los
         # aliens. Devuelve un diccionario que contiene las balas y los aliens que han chocado.
-        collision = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_point * len(aliens)
+            self.sb.prep_score()
+            self.sb.check_high_score()
+
         # Los dos argumentos True le dicen a Pygame que borren las balas y los aliens que choquen.
         # Podriamos hacer una superbala que arrasara a todos los aliens por su camino poniendo
         # el primer argumento booleano como False.
@@ -176,6 +189,8 @@ class AlienInvasion:
             # Destruye las balas existentes y crea una flota nueva.
             self.bullets.empty()
             self._create_fleet()
+            # acelera el juego al destruir la flota enemiga
+            self.settings.increase_speed()
 
     def _update_aliens(self):
         """
@@ -283,6 +298,9 @@ class AlienInvasion:
         # Cuando llamamos a draw() en un grupo, Pygame dibuja cada elemento del grupo
         # en la posición definida por su atributo rect. El argumento que le pasamos es una
         # superficie en la que dibujar los elementos del grupo.
+
+        # Dibuja la información de la puntuación
+        self.sb.show_score()
 
         # Dibuja el botón para jugar si el juego está inactivo.
         # Para que sea visible encima de los demás elementos de la pantalla lo dibujamos después
