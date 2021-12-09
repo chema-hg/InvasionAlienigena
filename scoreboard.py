@@ -75,8 +75,8 @@ class Scoreboard:
 
     def prep_ships(self):
         """Muestran cuantas naves quedan por pantalla"""
-        self.ships = Group() # Crea un grupo vacio par recoger las instancias de la nave
-        for ship_number in range(self.stats.ships_left): # para rellenar el grupo se ejecuta este bucle.
+        self.ships = Group()  # Crea un grupo vacio par recoger las instancias de la nave
+        for ship_number in range(self.stats.ships_left):  # para rellenar el grupo se ejecuta este bucle.
             ship = Ship(self.ai_game)
             ship.rect.x = 10 + ship_number * ship.rect.width
             ship.rect.y = 10

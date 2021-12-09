@@ -16,7 +16,6 @@ from bullet import Bullet
 from alien import Alien
 
 
-
 class AlienInvasion:
     """Clase general para gestionar los recursos y el comportamiento del juego"""
 
@@ -60,7 +59,6 @@ class AlienInvasion:
         # Hace el boton play
         self.play_button = Button(self, "Jugar")
 
-
     def run_game(self):
         """Inicia el bucle principal del juego"""
         while True:
@@ -88,7 +86,7 @@ class AlienInvasion:
                 self._check_keyup_events(event)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Si el evento es click con el ratón.
-                mouse_pos: tuple = pygame.mouse.get_pos() # cordenadas x e y del cursor al hacer clic.
+                mouse_pos: tuple = pygame.mouse.get_pos()  # cordenadas x e y del cursor al hacer clic.
                 self._check_play_button(mouse_pos)
 
     def _check_keydown_events(self, event):
@@ -142,8 +140,6 @@ class AlienInvasion:
 
             # Oculta el cursor del ratón de la ventana cuando comienza el juego
             pygame.mouse.set_visible(False)
-
-
 
     def _fire_bullet(self):
         """Crea una bala nueva y la añade al grupo de balas"""
@@ -235,7 +231,6 @@ class AlienInvasion:
             self.stats.game_active = False
             # Muestra el cursos del ratón al terminar el juego
             pygame.mouse.set_visible(True)
-
 
     def _check_aliens_bottom(self):
         """Comprueba si algún alien ha llegado al fondo de la pantalla"""

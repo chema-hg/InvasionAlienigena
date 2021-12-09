@@ -26,7 +26,7 @@ class Settings:
         # Velocidad de bajada de los aliens al llegar al borde de la pantalla.
 
         # Rapidez con la que se acelera el juego cuando destruimos cada flota.
-        self.speedup_scale = 1.1 # 1.1
+        self.speedup_scale = 1.1  # 1.1
 
         # Lo rapido que aumenta el valor en puntos de los aliens al avanzar el juego
         self.score_scale = 1.5
@@ -53,6 +53,3 @@ class Settings:
         self.alien_speed *= self.speedup_scale
 
         self.alien_point = int(self.alien_point * self.score_scale)
-
-
-

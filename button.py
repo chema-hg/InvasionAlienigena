@@ -3,6 +3,8 @@
 # Se puede usar este código para hacer cualquier botón en el juego.
 
 import pygame.font
+
+
 # Módulo que permite mostrar texto en la pantalla.
 
 class Button:
@@ -14,9 +16,9 @@ class Button:
 
         # Configura las dimensiones y propiedades del boton
         self.width, self.height = 200, 50
-        self.button_color = (0, 255, 0) # verde claro
-        self.text_color = (255, 255, 255) # texto blanco
-        self.font = pygame.font.SysFont(None, 48) # none = fuente predeterminada, 48 tamaño texto.
+        self.button_color = (0, 255, 0)  # verde claro
+        self.text_color = (255, 255, 255)  # texto blanco
+        self.font = pygame.font.SysFont(None, 48)  # none = fuente predeterminada, 48 tamaño texto.
 
         # Crea el objeto rect del botón y lo centra.
         self.rect = pygame.Rect(0, 0, self.width, self.height)
@@ -35,15 +37,10 @@ class Button:
         # True es el suavizado
         # colores de la fuente
         # colores del fondo. (sino se incluye pygame intenta poner un fondo trasparente.
-        self.msg_image_rect = self.msg_image.get_rect() # centramos la imagen en el boton
+        self.msg_image_rect = self.msg_image.get_rect()  # centramos la imagen en el boton
         self.msg_image_rect.center = self.rect.center
 
     def draw_button(self):
         # Dibuja un boton sin contenido y luego el mensaje
         self.screen.fill(self.button_color, self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)
-
-
-
-
-
