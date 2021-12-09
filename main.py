@@ -129,6 +129,8 @@ class AlienInvasion:
 
             self.stats.game_active = True
             self.sb.prep_score()
+            self.sb.prep_level()
+            self.sb.prep_ships()
 
             # Se deshace de los aliens y las balas que pudieran quedar en la pantalla.
             self.aliens.empty()
@@ -192,6 +194,10 @@ class AlienInvasion:
             # acelera el juego al destruir la flota enemiga
             self.settings.increase_speed()
 
+            # Aumenta el nivel
+            self.stats.level += 1
+            self.sb.prep_level()
+
     def _update_aliens(self):
         """
          Comprueba si la flota está en un borde,
@@ -212,6 +218,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # Disminuye ships_left.
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
             # Se deshace de los aliens y balas restantes
             self.aliens.empty()

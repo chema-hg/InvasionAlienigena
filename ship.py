@@ -1,17 +1,19 @@
 """Administrará la mayor parte del comportamiento de la nave
 del jugador."""
 import pygame
+from pygame.sprite import Sprite
 
 
 # Pygame usa los archivos bmp por defecto
 # Es importante que el color de fondo de la imagen seleccionada tenga un fondo
 # trasparente o sólido que se pueda combinar con el color del fondo del juego.
 
-class Ship:
+class Ship(Sprite):
     """Una clase para gestionar la nave"""
 
     def __init__(self, ai_game):
         """inicializa la nave y configura su posición inicial"""
+        super().__init__()
         self.screen = ai_game.screen
         # asignamos la pantalla a un atributo de Ship para poder acceder fácilmente
         # en todos los métodos de la clase.
